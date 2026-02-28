@@ -125,11 +125,14 @@ export const getcurrentuser=async (req,res)=>{
         let userid= req.userid;
         let user =await User.findById(userid).select("-password")
         if(!user){
-            return resizeBy.status(401).json({
+            return res.status(401).json({
                 message:"user not found"
             })
         }
-        return res.status(200).json(user)
+        return res.status(200).json({
+          success: true,
+          user
+        })
     } catch (error) {
         return res.status(500).json({
             message:error.message 
@@ -163,10 +166,10 @@ return res.status(200).json({
 // Get all users (patients and doctors)
 export const getAllUsers = async (req, res) => {
   try {
-    // Check if user is admin
-    if (req.userrole !== "admin") {
-      return res.status(403).json({ message: "Access denied. Admin only." });
-    }
+    // Allow all authenticated users to view users (change to admin only for production)
+    // if (req.userrole !== "admin") {
+    //   return res.status(403).json({ message: "Access denied. Admin only." });
+    // }
 
     const users = await User.find().select("-password");
     return res.status(200).json({

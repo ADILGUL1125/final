@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import { Link } from "react-router";
 import axios from "axios";
 import { useAuthStore } from "../zustand/auth.js";
-import getcurrentuser from "../customhook/currentuser.js";
 import {useNavigate} from "react-router"
 
 const Login = () => {
@@ -15,8 +14,7 @@ const Login = () => {
     formState: { errors, isSubmitting },
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
-  const loginstore = useAuthStore();
-  let {user,login} =useAuthStore()
+  const { login } = useAuthStore()
 
   const onSubmit = async (data) => {
    try {
@@ -32,17 +30,15 @@ const Login = () => {
     // Baki redirect logic
     const { role } = response.data.user;
     if (role === "admin") {
-      navigate("/admin-dashboard");
-    } else if(role === "doctor") {
-      navigate("/doctor-dashboard");
-    }else{
-      navigate("/patient-dashbord")
+      navigate("/admin");
+    } else {
+      navigate("/dashbord");
     }
 
     toast.success("Welcome back!");}
     catch (error) {
       console.log("error to fetch login api");
-      toast.error(err.response?.data?.message || "Login failed");
+      toast.error(error.response?.data?.message || "Login failed");
   };
   }
   return (

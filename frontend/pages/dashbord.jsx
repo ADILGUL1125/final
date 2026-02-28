@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Logout from '../components/logout.jsx'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { useAuthStore } from '../zustand/auth.js'
 
 const Dashbord = () => {
@@ -17,7 +17,7 @@ const Dashbord = () => {
 
   const fetchUsers = async () => {
     try {
-      const usersRes = await fetch('http://localhost:3000/api/user/allusers', {
+      const usersRes = await fetch('http://localhost:3000/api/allusers', {
         credentials: 'include'
       })
       const usersData = await usersRes.json()

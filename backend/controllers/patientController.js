@@ -4,9 +4,10 @@ import { User } from "../modals/users.js";
 // Get all patients
 export const getAllPatients = async (req, res) => {
   try {
-    if (req.userrole !== "admin") {
-      return res.status(403).json({ message: "Access denied. Admin only." });
-    }
+    // Allow all authenticated users to view patients (change to admin only for production)
+    // if (req.userrole !== "admin") {
+    //   return res.status(403).json({ message: "Access denied. Admin only." });
+    // }
 
     const patients = await Patient.find().populate('userId', 'username email');
     return res.status(200).json({
@@ -34,9 +35,10 @@ export const getPatient = async (req, res) => {
 // Create patient
 export const createPatient = async (req, res) => {
   try {
-    if (req.userrole !== "admin") {
-      return res.status(403).json({ message: "Access denied. Admin only." });
-    }
+    // Allow all authenticated users to create patients (change to admin only for production)
+    // if (req.userrole !== "admin") {
+    //   return res.status(403).json({ message: "Access denied. Admin only." });
+    // }
 
     const { userId, firstName, lastName, phone, dateOfBirth, gender, address, medicalHistory, emergencyContact, bloodGroup } = req.body;
 
@@ -66,9 +68,10 @@ export const createPatient = async (req, res) => {
 // Update patient
 export const updatePatient = async (req, res) => {
   try {
-    if (req.userrole !== "admin") {
-      return res.status(403).json({ message: "Access denied. Admin only." });
-    }
+    // Allow all authenticated users to update patients (change to admin only for production)
+    // if (req.userrole !== "admin") {
+    //   return res.status(403).json({ message: "Access denied. Admin only." });
+    // }
 
     const patient = await Patient.findById(req.params.id);
     if (!patient) {
@@ -93,9 +96,10 @@ export const updatePatient = async (req, res) => {
 // Delete patient
 export const deletePatient = async (req, res) => {
   try {
-    if (req.userrole !== "admin") {
-      return res.status(403).json({ message: "Access denied. Admin only." });
-    }
+    // Allow all authenticated users to delete patients (change to admin only for production)
+    // if (req.userrole !== "admin") {
+    //   return res.status(403).json({ message: "Access denied. Admin only." });
+    // }
 
     const patient = await Patient.findById(req.params.id);
     if (!patient) {

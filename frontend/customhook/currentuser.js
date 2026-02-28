@@ -1,24 +1,30 @@
-import axios from "axios"
-import { useEffect } from "react"
-import { useAuthStore } from "../zustand/auth"
+import { useEffect } from "react";
+import { useAuthStore } from "../zustand/auth";
 
+const useCurrentUser = () => {
+  const { setUser, logout } = useAuthStore();
 
-const getcurrentuser=()=>{
-    const loginuser =useAuthStore()
-    
-    
-    useEffect(()=>{
-           const fetchuser= async()=>{
-            try {
-                let result =await axios(`http://localhost:3000/api/user/currentuser`,{withCredentials:true})
-                console.log(result)
-                // loginuser.login()
-            } catch (error) {
-                console.log("error in get current user ",error)
-            }
-           } 
-           fetchuser()
-    },[])
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/currentuser", {
+          credentials: "include",
+        });
 
-} 
-export default getcurrentuser
+        if (!response.ok) {
+          logout();
+          return;
+        }
+
+        const data = await response.json();
+        setUser(data?.user || data || null);
+      } catch {
+        logout();
+      }
+    };
+
+    fetchCurrentUser();
+  }, [setUser, logout]);
+};
+
+export default useCurrentUser;
