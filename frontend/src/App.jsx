@@ -14,7 +14,7 @@ const App = () => {
   useEffect(() => {
     const restoreSession = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/currentuser", {
+        const response = await fetch("https://final-git-main-adilgul1125s-projects.vercel.app/api/currentuser", {
           credentials: "include",
         });
 
@@ -67,3 +67,4 @@ const App = () => {
 }
 
 export default App
+

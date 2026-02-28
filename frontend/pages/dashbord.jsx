@@ -17,7 +17,7 @@ const Dashbord = () => {
 
   const fetchUsers = async () => {
     try {
-      const usersRes = await fetch('http://localhost:3000/api/allusers', {
+      const usersRes = await fetch('https://final-git-main-adilgul1125s-projects.vercel.app/api/allusers', {
         credentials: 'include'
       })
       const usersData = await usersRes.json()
@@ -25,7 +25,7 @@ const Dashbord = () => {
         setUsers(usersData.users)
       }
 
-      const patientsRes = await fetch('http://localhost:3000/api/allpatients', {
+      const patientsRes = await fetch('https://final-git-main-adilgul1125s-projects.vercel.app/api/allpatients', {
         credentials: 'include'
       })
       const patientsData = await patientsRes.json()
@@ -33,7 +33,7 @@ const Dashbord = () => {
         setPatients(patientsData.patients)
       }
 
-      const doctorsRes = await fetch('http://localhost:3000/api/alldoctors', {
+      const doctorsRes = await fetch('https://final-git-main-adilgul1125s-projects.vercel.app/api/alldoctors', {
         credentials: 'include'
       })
       const doctorsData = await doctorsRes.json()
@@ -170,3 +170,4 @@ const Dashbord = () => {
 }
 
 export default Dashbord
+

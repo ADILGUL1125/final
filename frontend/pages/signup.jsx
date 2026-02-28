@@ -17,7 +17,7 @@ const Signup = () => {
   const onSubmit = async (data) => {
     
    try {
-    const response = await axios.post("http://localhost:3000/api/signup", data);
+    const response = await axios.post("https://final-git-main-adilgul1125s-projects.vercel.app/api/signup", data);
     toast.success(response.data.message);
   } catch (err) {
     toast.error(err.response?.data?.message || "Signup failed");
@@ -138,3 +138,4 @@ const Signup = () => {
 }
 
 export default Signup
+

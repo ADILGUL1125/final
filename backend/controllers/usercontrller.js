@@ -94,7 +94,7 @@ export const loginUser = async (req, res) => {
     // 5. Cookie Options
     const cookieOptions = {
       httpOnly: true, // Client-side JS isko read nahi kar sakti (Secure)
-      secure: process.env.NODE_ENV === "production", // Sirf HTTPS par kaam karega prod mein
+      secure:true || process.env.NODE_ENV === "production", // Sirf HTTPS par kaam karega prod mein
       sameSite: "strict", // CSRF attacks se bachata hai
       maxAge: 1 * 24 * 60 * 60 * 1000, // 1 din ki expiry
     };

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Logout from "../components/logout.jsx";
 
-const API = "http://localhost:3000/api";
+const API = "https://final-git-main-adilgul1125s-projects.vercel.app/api";
 
 const initialPatientForm = {
   userId: "",
@@ -720,3 +720,4 @@ const Admin = () => {
 };
 
 export default Admin;
+

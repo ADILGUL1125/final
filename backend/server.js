@@ -12,7 +12,7 @@ const port = 3000
 app.use(express.json())
 app.use(cookieparser())
 const corsOptions = {
-  origin: "http://localhost:5173",  // sirf is origin ko allow karega
+  origin: "http://localhost:5173" ||"https://final-git-main-adilgul1125s-projects.vercel.app/",  // sirf is origin ko allow karega
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true  // cookies ya token allow karega
 };

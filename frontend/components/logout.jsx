@@ -8,7 +8,7 @@ const Logout = () => {
     let { logout} =useAuthStore()
     const handlelogout =async ()=>{
        try {
-    await axios.post("http://localhost:3000/api/logout", {}, {
+    await axios.post("https://final-git-main-adilgul1125s-projects.vercel.app/api/logout", {}, {
       withCredentials: true
     });
 
