@@ -1,11 +1,16 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import Login from '../pages/login';
 import Signup from '../pages/signup';
 import Home from '../pages/home';
 import {Toaster} from "react-hot-toast"
+import { useAuthStore } from '../zustand/auth.js';
+import Dashbord from '../pages/dashbord.jsx';
+import Admin from '../pages/admin.jsx';
 
 const App = () => {
+  const {user}=useAuthStore()
+  console.log(user)
   return (
     <div>
       <Toaster   position="top-left" toastOptions={{
@@ -19,11 +24,25 @@ const App = () => {
     
   }}
 />
-    <Routes>
-      <Route path="/" element={<Home/>} />
-      <Route path="/login" element={<Login/>} />
-      <Route path="/signup" element={<Signup/>} />
-    </Routes>
+            {!user ? (
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="*" element={<Login />} />
+            </Routes>
+          ) : (
+            <Routes>
+              
+              <Route path="/dashbord" element={<Dashbord />} />
+              {user.role === 'admin' && (
+                <Route path="/admin" element={<Admin />} />
+              )}
+              <Route path="*" element={<Navigate to="/dashbord" />} />
+            
+            </Routes>
+          )}
+
+    
 
 
     </div>

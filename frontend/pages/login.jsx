@@ -4,8 +4,11 @@ import toast from "react-hot-toast";
 import { Link } from "react-router";
 import axios from "axios";
 import { useAuthStore } from "../zustand/auth.js";
+import getcurrentuser from "../customhook/currentuser.js";
+import {useNavigate} from "react-router"
 
 const Login = () => {
+  let navigate =useNavigate()
   const {
     register,
     handleSubmit,
@@ -13,33 +16,35 @@ const Login = () => {
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const loginstore = useAuthStore();
+  let {user,login} =useAuthStore()
 
   const onSubmit = async (data) => {
-    try {
-      const res = await axios.post("http://localhost:3000/api/loginuser", data,{
-        withCredentials: true
-      });
-      console.log(res.data.data);
-      toast.success(res.data.message);
-      loginstore.login({
-        email: res.data?.data?.email,
-        id: res.data?.data?.id,
-        username: res.data?.data?.username,
-      });
-    } catch (error) {
-      console.log("error to fetch login api");
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message); // backend ka message show hoga
-      } else {
-        toast.error("Something went wrong"); // fallback
-      }
-    }
-  };
+   try {
+    const response = await axios.post(
+      "http://localhost:3000/api/login", 
+      data, // Doosra argument: Data (Payload)
+      { 
+        withCredentials: true // Teesra argument: Config object
+      } 
+    );
+    login(response.data.user)
 
+    // Baki redirect logic
+    const { role } = response.data.user;
+    if (role === "admin") {
+      navigate("/admin-dashboard");
+    } else if(role === "doctor") {
+      navigate("/doctor-dashboard");
+    }else{
+      navigate("/patient-dashbord")
+    }
+
+    toast.success("Welcome back!");}
+    catch (error) {
+      console.log("error to fetch login api");
+      toast.error(err.response?.data?.message || "Login failed");
+  };
+  }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#071034] via-[#0b3a73] to-[#081a3a] ">
       <div className="max-w-xl w-full  gap-8">

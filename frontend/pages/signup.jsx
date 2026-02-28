@@ -1,5 +1,7 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import { Link } from 'react-router'
 
 const Signup = () => {
@@ -12,11 +14,18 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
 
-  const onSubmit = (data) => {
-    // replace with backend call
-    console.log('signup', data)
+  const onSubmit = async (data) => {
     
+   try {
+    const response = await axios.post("http://localhost:3000/api/signup", data);
+    toast.success(response.data.message);
+  } catch (err) {
+    toast.error(err.response?.data?.message || "Signup failed");
+    console.log(err.message)
   }
+  };
+    
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#071034] via-[#0b3a73] to-[#081a3a] ">
@@ -52,6 +61,22 @@ const Signup = () => {
                 type="email"
               />
               {errors.email && <p className="text-rose-400 text-sm mt-1">{errors.email.message}</p>}
+            </div>
+
+            <div>
+              <label className="text-sm text-white/80">Role</label>
+              <select
+                {...register('role', { required: 'Role is required' })}
+                className={`mt-2 w-full px-4 py-3 rounded-lg bg-white/5 border ${
+                  errors.role ? 'border-rose-400' : 'border-white/10'
+                } placeholder-white/40 text-white outline-none focus:ring-2 focus:ring-blue-400 transition`}
+              >
+                <option value="" className="bg-gray-800">Select a role</option>
+                <option value="doctor" className="bg-gray-800">Doctor</option>
+                <option value="patient" className="bg-gray-800">Patient</option>
+                <option value="receptionist" className="bg-gray-800">Receptionist</option>
+              </select>
+              {errors.role && <p className="text-rose-400 text-sm mt-1">{errors.role.message}</p>}
             </div>
 
             <div>

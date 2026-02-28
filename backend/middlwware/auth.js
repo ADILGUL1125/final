@@ -14,7 +14,8 @@ export const verifyToken = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // ✅ Attach user info to request
-    req.user = decoded; // decoded contains { id: user._id }
+    req.userid = decoded.id; // decoded contains { id: user._id, role: user.role }
+    req.userrole = decoded.role; // Attach role for admin checks
 
     next(); // allow route to continue
   } catch (error) {
